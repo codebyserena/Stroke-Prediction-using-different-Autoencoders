@@ -1,63 +1,53 @@
 # Stroke Prediction Using Autoencoders
 
-## Project Overview
+Predicts stroke risk from patient demographic and clinical data using three types of autoencoders (Standard, Denoising, and Variational) to learn compressed feature representations, then feeds those representations into a classifier. The comparison is the point: each autoencoder learns a different kind of representation, and the project tests which one actually helps prediction.
 
-This project aims to predict the likelihood of a stroke using a dataset containing patient information, including demographic and clinical features. We leverage **three types of autoencoders**—Standard Autoencoder (AE), Denoising Autoencoder (DAE), and Variational Autoencoder (VAE)—to extract meaningful, compressed representations of the data. These representations are then used for classification tasks, predicting the risk of stroke.
+## Highlights
+
+- Compares three autoencoder architectures (AE, DAE, VAE) as feature extractors on the same clinical dataset
+- Denoising Autoencoder tests robustness to noisy or incomplete patient data
+- Variational Autoencoder models the latent space as a distribution rather than a point estimate, capturing uncertainty
+- Combines features from all three into an ensemble, rather than picking a single "best" autoencoder upfront
 
 ## Autoencoders Used
 
-1. **Standard Autoencoder (AE)**: Compresses high-dimensional input data into a lower-dimensional latent space and reconstructs the input from this compressed representation.
-   - **Purpose**: Dimensionality reduction and feature extraction.
-   
-2. **Denoising Autoencoder (DAE)**: A variant of the Standard Autoencoder, trained to reconstruct the original data from a noisy version of the input.
-   - **Purpose**: Handles noisy or incomplete data, improves robustness of feature learning.
-   
-3. **Variational Autoencoder (VAE)**: A probabilistic autoencoder that models the latent space as a distribution and introduces variability in the encoding process.
-   - **Purpose**: Captures the uncertainty and variability in the data, with the ability to generate synthetic data.
+1. **Standard Autoencoder (AE)** — compresses high-dimensional input into a lower-dimensional latent space and reconstructs it. Used for dimensionality reduction and feature extraction.
+2. **Denoising Autoencoder (DAE)** — reconstructs the original data from a noisy version of the input. Used to improve robustness of the learned features.
+3. **Variational Autoencoder (VAE)** — models the latent space as a distribution rather than a fixed point, capturing variability and uncertainty in the data.
 
 ## Dataset
 
-- **Source**: The dataset used for this project is the Stroke Prediction dataset, which contains information about patients, such as age, gender, hypertension status, heart disease, smoking habits, and more.
-- **Target Variable**: The target is whether the patient had a stroke (`1`) or not (`0`).
+- **Source**: the Stroke Prediction dataset, containing patient age, gender, hypertension status, heart disease, smoking habits, and related fields
+- **Target variable**: whether the patient had a stroke (`1`) or not (`0`)
 
 ## Workflow
 
-1. **Data Preprocessing**:
-   - Handling missing values.
-   - One-hot encoding for categorical variables.
-   - Normalizing numerical features.
+1. **Data preprocessing**: missing value handling, one-hot encoding for categorical variables, normalising numerical features
+2. **Autoencoder training**: AE, DAE, and VAE each trained independently to learn compressed feature representations
+3. **Feature extraction**: encoded features pulled from each trained autoencoder
+4. **Ensemble**: features from all three autoencoders combined and passed to a Random Forest classifier
+5. **Evaluation**: accuracy, precision, recall, and F1-score
 
-2. **Autoencoder Models**:
-   - **Standard Autoencoder (AE)**: Trained on the input data for dimensionality reduction.
-   - **Denoising Autoencoder (DAE)**: Trained on noisy input data to learn robust feature representations.
-   - **Variational Autoencoder (VAE)**: Trained to model the latent space as a distribution, capturing the underlying variability in the data.
+## Installation
 
-3. **Feature Extraction**:
-   - Encoded features from each autoencoder are extracted.
-   - These features are used as input for a classifier (Random Forest) for stroke prediction.
+Requires Python 3.x, TensorFlow 2.0+, Scikit-learn, Pandas, NumPy, Matplotlib, and Seaborn.
 
-4. **Ensemble of Autoencoders**:
-   - Features from all three autoencoders are combined to create an **ensemble** of autoencoders.
-   - The combined feature set is used for classification to leverage the strengths of each autoencoder.
-
-5. **Evaluation Metrics**:
-   - The models are evaluated based on **Accuracy**, **Precision**, **Recall**, and **F1-Score**.
-
-## Installation and Setup
-
-### Requirements
-
-- **Python 3.x**
-- **TensorFlow** (>= 2.0)
-- **Scikit-learn**
-- **Pandas**
-- **NumPy**
-- **Matplotlib**
-- **Seaborn**
-
-### Installation
-
-You can install the required Python libraries using `pip`:
-
-```bash
+```
 pip install tensorflow scikit-learn pandas numpy matplotlib seaborn
+```
+
+## How to Run
+
+Open `Stroke Prediction using AutoEncoder.ipynb` in Jupyter and run the cells in order.
+
+```
+jupyter notebook "Stroke Prediction using AutoEncoder.ipynb"
+```
+
+## License
+
+MIT. See [LICENSE](LICENSE) for details.
+
+## Author
+
+Serena Mendanha — [portfolio](https://serena-mendanha-portfolio.netlify.app) · [LinkedIn](https://www.linkedin.com/in/serena-mendanha/)
